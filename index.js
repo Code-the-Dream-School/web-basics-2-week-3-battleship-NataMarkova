@@ -2,30 +2,36 @@ const battleship = () => {
 
   // create objects with the given parametrs
   let playerOne = {
-    name: "playerOne",
+    name: "",
     shipCount: 0,
-    gameBoard: [
-      [0, 0, 0, 0], 
-      [0, 0, 0, 0], 
-      [0, 0, 0, 0], 
-      [0, 0, 0, 0]
-    ]
+    gameBoard: []
   }
   let playerTwo = {
-    name: "playerTwo",
+    name: "",
     shipCount: 0,
-    gameBoard: [
-      [0, 0, 0, 0], 
-      [0, 0, 0, 0], 
-      [0, 0, 0, 0], 
-      [0, 0, 0, 0]
-    ]
+    gameBoard: []
   };
 
   // asking for the players' name
   playerOne.name = prompt("Player 1 what is your name?");
   playerTwo.name = prompt("Player 2 what is your name?");
-  
+
+  // creating game boards
+  let boardColumn = 4;
+  const buildBoard = player => {
+    for (let i = 0; i < boardColumn; i++) {
+      let boardRow = []
+      for (let j = 0; j < boardColumn; j++) {
+        boardRow.push(0)
+      }
+      player.gameBoard.push(boardRow);
+    }
+  }
+  buildBoard(playerOne);
+  buildBoard(playerTwo);
+  console.log("Test", playerTwo.gameBoard);
+
+
   // randomly add ships to each board
   const shipPlace = (player) => {
     let x = Math.floor(Math.random() *4)
@@ -37,7 +43,7 @@ const battleship = () => {
         player.shipCount++;
       } 
     }
-
+  
   while(playerOne.shipCount < 4) {
     shipPlace(playerOne);
   }
@@ -62,7 +68,7 @@ const battleship = () => {
     let xChoice  = prompt("Please provide your x coordinate choice");
     let yChoice  = prompt("Please provide your y coordinate choice");
     
-  //  check the opponent's board to see if the space at those indices is aequal to 1
+  //  check the opponent's board to see if the space at those indices is equal to 1
     if (opponent.gameBoard[xChoice][yChoice] === 1) {
       opponent.gameBoard[xChoice][yChoice] = 0;
       opponent.shipCount--;
